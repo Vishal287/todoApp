@@ -1,8 +1,9 @@
 import express from "express";
-import { logger } from "./middelwares/logger.js";
-import { ApiResonse } from "./utils/error.js";
-// import DB from "./db/db.js";
+import DB from "./db/db.js";
 import UserRouter from "./routes/user.route.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const Port = process.env.PORT || 3000;
@@ -15,16 +16,12 @@ app.use(
 
 app.use("/api/users/", UserRouter);
 
-// DB()
-//   .then(() => {
-//     app.listen(Port, () => {
-//       console.log("Server is started successfully!!!! ");
-//     });
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
-
-app.listen(Port, () => {
-  console.log("Server is started successfully!!!! ");
-});
+DB()
+  .then(() => {
+    app.listen(Port, () => {
+      console.log("Server is started successfully!!!! ");
+    });
+  })
+  .catch((error) => {
+    console.log(error);
+  });

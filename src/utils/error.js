@@ -1,4 +1,4 @@
-export class ApiResonse extends Error {
+export class ApiError extends Error {
   constructor(
     statusCode,
     message = "Something want wrong",

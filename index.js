@@ -1,6 +1,7 @@
 import express from "express";
 import DB from "./db/db.js";
 import UserRouter from "./routes/user.route.js";
+import TodoRouter from "./routes/todo.route.js";
 import dotenv from "dotenv";
 import { logger } from "./middelwares/logger.js";
 
@@ -17,6 +18,7 @@ app.use(
 app.use(logger);
 
 app.use("/api/users/", UserRouter);
+app.use("/api/todos/", TodoRouter);
 
 DB()
   .then(() => {

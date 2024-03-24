@@ -3,7 +3,7 @@ import { METHODS } from "../tokens/methods.js";
 import { STATUS_CODES } from "../tokens/statusCode.js";
 
 export function logger(req, res, next) {
-  const path = req.route.path;
+  const path = req.url;
   let method = req.method;
   let code = res.statusCode;
   const ip = req.ip;

@@ -36,4 +36,11 @@ const todoSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+todoSchema.pre("save", async function (next) {
+  if (this.isCompleted === undefined) this.isCompleted = false;
+  next();
+});
+
 const Todo = new mongoose.model("Todo", todoSchema);
+
+export default Todo;

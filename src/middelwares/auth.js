@@ -10,9 +10,9 @@ export async function Authentication(req, res, next) {
     const decode = jwt.decode(token, process.env.ACCESS_TOKEN_SECRET);
     const isExpire =
       new Date(decode.exp).getMilliseconds() < new Date().getMilliseconds();
-    if (!isExpire) res.status(401).send("Unauthorized");
+    if (isExpire) throw new ApiError(401, "Token expired!");
     const user = await User.findById(decode._id);
-    if (!user) res.status(401).send("User not found!");
+    if (!user) throw new ApiError(401, "User not found!");
     req.user = user;
     next();
   } catch (error) {

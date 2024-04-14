@@ -57,7 +57,6 @@ const deleteTodo = async (req, res) => {
     const todo = await Todo.findByIdAndDelete({ _id });
     res.status(200).send(todo);
   } catch (error) {
-    console.log(error);
     throw new ApiError(500, "Internal server error!", false);
   }
 };
@@ -73,4 +72,16 @@ const getTodo = async (req, res) => {
   }
 };
 
-export { createTodo, updateTodo, deleteTodo, getTodo };
+const getUserTodos = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    if (!userId) throw new ApiError(400, "User todos not found!", false);
+    const todos = await Todo.find({
+      createdBy: userId,
+    });
+    res.status(200).send(todos);
+  } catch (error) {
+    throw new ApiError(500, "Internal server error!", false);
+  }
+};
+export { createTodo, updateTodo, deleteTodo, getTodo, getUserTodos };
